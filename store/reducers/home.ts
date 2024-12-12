@@ -1,30 +1,19 @@
 import { Reducer } from 'redux';
 import { PlaceDetails, Prediction } from '../../src/models';
+import { RootActions } from '../actions';
 
-export const UPDATE_SEARCH_RESULTS = 'UPDATE_SEARCH_RESULTS';
+export const SEARCH_LOCATIONS_REQUEST = 'SEARCH_LOCATIONS_REQUEST';
+export const SEARCH_LOCATIONS_SUCCESS = 'SEARCH_LOCATIONS_SUCCESS';
+export const SEARCH_LOCATIONS_FAILURE = 'SEARCH_LOCATIONS_FAILURE';
 export const CLEAR_SEARCH_RESULTS = 'CLEAR_SEARCH_RESULTS';
-export const UPDATE_SELECTED_LOCATION = 'UPDATE_SELECTED_LOCATION';
-
-interface UpdateSearchResultsAction {
-  type: typeof UPDATE_SEARCH_RESULTS;
-  payload: Prediction[];
-}
-
-interface ClearSearchResultsAction {
-  type: typeof CLEAR_SEARCH_RESULTS;
-}
-
-interface UpdateSelectedLocationAction {
-  type: typeof UPDATE_SELECTED_LOCATION;
-  payload: PlaceDetails;
-}
+export const PLACE_DETAILS_REQUEST = 'PLACE_DETAILS_REQUEST';
+export const PLACE_DETAILS_SUCCESS = 'PLACE_DETAILS_SUCCESS';
+export const PLACE_DETAILS_FAILURE = 'PLACE_DETAILS_FAILURE';
 
 type HomeState = {
   searchResults: Prediction[],
   selectedLocation: PlaceDetails;
 };
-
-type HomeAction = UpdateSearchResultsAction | ClearSearchResultsAction | UpdateSelectedLocationAction;
 
 const INITIAL_STATE: HomeState = {
   searchResults: [],
@@ -32,12 +21,12 @@ const INITIAL_STATE: HomeState = {
   selectedLocation: {},
 };
 
-const homeReducer: Reducer<HomeState, HomeAction> = (
+const homeReducer: Reducer<HomeState, RootActions> = (
   state = INITIAL_STATE,
   action
 ) => {
   switch (action.type) {
-    case UPDATE_SEARCH_RESULTS:
+    case SEARCH_LOCATIONS_SUCCESS:
       return {
         ...state,
         searchResults: action.payload,
@@ -47,7 +36,7 @@ const homeReducer: Reducer<HomeState, HomeAction> = (
         ...state,
         searchResults: [],
       };
-    case UPDATE_SELECTED_LOCATION:
+    case PLACE_DETAILS_SUCCESS:
       return {
         ...state,
         selectedLocation: action.payload,

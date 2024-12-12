@@ -1,3 +1,8 @@
+export interface SearchResultsApiResponse {
+  predictions: Prediction[];
+  status: string;
+}
+
 export interface Prediction {
   description: string;
   matched_substrings: MatchedSubstring[];
@@ -14,14 +19,19 @@ interface MatchedSubstring {
 }
 
 interface StructuredFormatting {
-  main_text:                    string;
+  main_text: string;
   main_text_matched_substrings: MatchedSubstring[];
-  secondary_text:               string;
+  secondary_text: string;
 }
 
 interface Term {
   offset: number;
   value:  string;
+}
+
+export interface PlaceDetailsApiResponse {
+  result: PlaceDetails;
+  status: string;
 }
 
 export interface PlaceDetails {

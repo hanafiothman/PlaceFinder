@@ -1,25 +1,23 @@
 import React from 'react';
 import { Alert, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { connect } from 'react-redux';
-import { RootState } from '../../store';
 import { PlaceDetails } from '../models';
 import LayoutView from '../layout/LayoutView';
 import HistoryItem from '../components/HistoryItem';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { BottomTabParamList } from '../navigation/AppNavigator';
-import { clearSearchHistory, updateSelectedLocation } from '../../store/actions';
+import { clearSearchHistory, placeDetailsSuccess } from '../../store/actions';
 import { Icon } from '@ant-design/react-native';
+import { RootState, useAppDispatch } from '../../store';
+import { shallowEqual, useSelector } from 'react-redux';
 
-interface SearchHistoryScreenProps extends BottomTabScreenProps<BottomTabParamList, 'Search History'> {
-  history: PlaceDetails[];
-  setSelectedLocation: (location: PlaceDetails) => void;
-  clearHistory: () => void;
-}
+const SearchHistory = ({ navigation }: BottomTabScreenProps<BottomTabParamList, 'Search History'>): JSX.Element => {
 
-const SearchHistory = ({ history, setSelectedLocation, clearHistory, navigation }: SearchHistoryScreenProps): JSX.Element => {
+  const dispatch = useAppDispatch();
+
+  const searchHistory = useSelector((state: RootState) => state.searchHistory, shallowEqual);
 
   const selectHistoryItem = async (item: PlaceDetails) => {
-    setSelectedLocation(item);
+    dispatch(placeDetailsSuccess(item));
     navigation.navigate('Home');
   };
 
@@ -32,7 +30,7 @@ const SearchHistory = ({ history, setSelectedLocation, clearHistory, navigation 
         },
         {
           text: 'OK',
-          onPress: () => clearHistory(),
+          onPress: () => dispatch(clearSearchHistory()),
         },
       ],
       { cancelable: false }
@@ -44,9 +42,9 @@ const SearchHistory = ({ history, setSelectedLocation, clearHistory, navigation 
       <View style={styles.header}>
         <TouchableOpacity
           onPress={() => clearAllHistory()}
-          disabled={!history.length}
+          disabled={!searchHistory.length}
         >
-          <Text style={history.length ? styles.clearLabel : styles.clearLabelDisabled}>
+          <Text style={searchHistory.length ? styles.clearLabel : styles.clearLabelDisabled}>
             Clear all
           </Text>
         </TouchableOpacity>
@@ -54,7 +52,7 @@ const SearchHistory = ({ history, setSelectedLocation, clearHistory, navigation 
       <FlatList
         style={styles.list}
         horizontal={false}
-        data={history}
+        data={searchHistory}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
           <HistoryItem
@@ -78,15 +76,6 @@ const SearchHistory = ({ history, setSelectedLocation, clearHistory, navigation 
       />
     </LayoutView>
   );
-};
-
-const mapStateToProps = (state: RootState) => ({
-  history: state.searchHistory,
-});
-
-const mapDispatchToProps = {
-  setSelectedLocation: updateSelectedLocation,
-  clearHistory: clearSearchHistory,
 };
 
 const styles = StyleSheet.create({
@@ -114,4 +103,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchHistory);
+export default SearchHistory;
