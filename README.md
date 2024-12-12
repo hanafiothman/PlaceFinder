@@ -1,74 +1,157 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# PlaceFinder
 
-# Getting Started
+This is a bare React Native project. It provides a flexible and customizable environment for mobile application development on both iOS and Android platforms.
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## Table of Contents
 
-## Step 1: Start the Metro Server
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Running the Project](#running-the-project)
+- [Project Structure](#project-structure)
+- [Contributing](#contributing)
+- [License](#license)
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+## Prerequisites
 
-To start Metro, run the following command from the _root_ of your React Native project:
+To run this project on your local machine, ensure you have the following tools installed:
 
-```bash
-# using npm
-npm start
+### General Requirements
 
-# OR using Yarn
-yarn start
+- [Node.js](https://nodejs.org/) (version 14 or later is recommended)
+- [Yarn](https://yarnpkg.com/) or npm (Node Package Manager)
+
+### iOS Requirements
+
+- macOS
+- [Xcode](https://developer.apple.com/xcode/)
+  - Ensure the Command Line Tools are installed via Xcode.
+  - Open Xcode and install any additional required components.
+- [Cocoapods](https://cocoapods.org/) (run `sudo gem install cocoapods`)
+
+### Android Requirements
+
+- [Android Studio](https://developer.android.com/studio)
+  - Install the Android SDK and relevant tools.
+  - Add the `ANDROID_HOME` environment variable to your system.
+- [Java Development Kit (JDK)](https://www.oracle.com/java/technologies/javase-downloads.html) (version 11 or later)
+
+### Additional Notes
+
+- Ensure you have a device emulator or a physical device connected for testing.
+
+## Installation
+
+1. Clone this repository:
+
+   ```bash
+   git clone https://github.com/hanafiothman/PlaceFinder.git
+   cd PlaceFinder
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   yarn install
+   ```
+   Or, if you prefer npm:
+
+   ```bash
+   npm install
+   ```
+
+3. Create a `.env` file in the root of the project and add the following line:
+
+   ```
+   GOOGLE_API_KEY=<YOUR_GOOGLE_API_KEY>
+   ```
+
+   Ensure that the API key is associated with a project in which the Maps SDK for Android and Places API are enabled. Refer [How to get a Google API key](https://developers.google.com/maps/documentation/android-sdk/get-api-key) for more information.
+
+4. Install iOS dependencies (macOS only):
+
+   ```bash
+   cd ios
+   pod install
+   cd ..
+   ```
+
+## Running the Project
+
+### Running on iOS
+
+1. Start the Metro bundler:
+
+   ```bash
+   yarn start
+   ```
+   Or:
+
+   ```bash
+   npm start
+   ```
+
+2. Open the iOS simulator:
+
+   ```bash
+   yarn ios
+   ```
+   Or:
+
+   ```bash
+   npx react-native run-ios
+   ```
+
+### Running on Android
+
+1. Start the Metro bundler:
+
+   ```bash
+   yarn start
+   ```
+   Or:
+
+   ```bash
+   npm start
+   ```
+
+2. Run the app on an Android emulator or connected device:
+
+   ```bash
+   yarn android
+   ```
+   Or:
+
+   ```bash
+   npx react-native run-android
+   ```
+
+## Project Structure
+
+The project follows a standard React Native structure:
+
+```
+PlaceFinder
+├── android/           # Android-specific files
+├── ios/               # iOS-specific files
+├── src/               # Source code (components, screens, etc.)
+├── node_modules/      # Installed dependencies
+├── App.tsx            # Entry point of the application
+├── package.json       # Project metadata and scripts
+└── README.md          # Project documentation
+└── ...
 ```
 
-## Step 2: Start your Application
+## Contributing
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+Contributions are welcome! Please follow these steps:
 
-### For Android
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature/your-feature-name`).
+3. Commit your changes (`git commit -m 'Add some feature'`).
+4. Push to the branch (`git push origin feature/your-feature-name`).
+5. Open a pull request.
 
-```bash
-# using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
-
-### For iOS
-
-```bash
-# using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
-
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
-
-## Step 3: Modifying your App
-
-Now that you have successfully run the app, let's modify it.
-
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
+## Learn More
 
 To learn more about React Native, take a look at the following resources:
 
