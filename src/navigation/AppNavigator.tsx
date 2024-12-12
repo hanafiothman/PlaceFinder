@@ -5,7 +5,7 @@ import Home from '../screens/Home';
 import SearchHistory from '../screens/SearchHistory';
 import BottomTabBar from './BottomTabBar';
 
-type BottomTabParamList = {
+export type BottomTabParamList = {
   'Home': undefined,
   'Search History': undefined,
 };

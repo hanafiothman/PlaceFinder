@@ -1,21 +1,23 @@
 import React, { useEffect, useRef } from 'react';
 import MapView, { Marker } from 'react-native-maps';
-import { Location, PlaceDetails } from '../models';
+import { Location } from '../models';
 import { Alert, Linking, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Icon } from '@ant-design/react-native';
 
 interface MapProps {
-  locationDetails: PlaceDetails;
+  locationName: string;
+  locationAddress: string;
+  coordinates: Location;
 }
 
-const Map = ({ locationDetails }: MapProps): JSX.Element => {
+const Map = ({ locationName, locationAddress, coordinates }: MapProps): JSX.Element => {
   const mapRef = useRef<MapView>(null);
 
-  const zoomToLocation = (location: Location) => {
+  const zoomToLocation = ({ lat, lng }: Location) => {
 		if (mapRef.current) {
       mapRef.current.animateToRegion({
-				latitude: location.lat,
-        longitude: location.lng,
+				latitude: lat,
+        longitude: lng,
         latitudeDelta: 0.002,
         longitudeDelta: 0.004,
 			}, 1000);
@@ -36,10 +38,10 @@ const Map = ({ locationDetails }: MapProps): JSX.Element => {
   };
 
   useEffect(() => {
-    if (locationDetails) {
-      zoomToLocation(locationDetails.geometry.location);
+    if (coordinates) {
+      zoomToLocation(coordinates);
     }
-  }, [locationDetails]);
+  }, [coordinates]);
 
   return (
     <>
@@ -60,20 +62,20 @@ const Map = ({ locationDetails }: MapProps): JSX.Element => {
       >
         <Marker
           coordinate={{
-            latitude: locationDetails.geometry.location.lat,
-            longitude: locationDetails.geometry.location.lng,
+            latitude: coordinates.lat,
+            longitude: coordinates.lng,
           }}
         />
       </MapView>
       <View style={styles.details}>
         <View style={styles.address}>
-          <Text>{locationDetails.name}</Text>
+          <Text>{locationName}</Text>
           <Text style={styles.addressText}>
-            {locationDetails.formatted_address}
+            {locationAddress}
           </Text>
         </View>
         <TouchableOpacity
-          onPress={() => getDirections(locationDetails.geometry.location)}
+          onPress={() => getDirections(coordinates)}
         >
           <Icon name={'environment'} color={'#FFCF00'} />
         </TouchableOpacity>

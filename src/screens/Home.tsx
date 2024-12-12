@@ -7,11 +7,24 @@ import { getLocationDetails, getLocationsByKeyword } from '../api';
 import { PlaceDetails, Prediction } from '../models';
 import LocationItem from '../components/LocationItem';
 import Map from '../components/Map';
+import { connect } from 'react-redux';
+import { clearSearchResults, updateSearchHistory, updateSearchResults, updateSelectedLocation } from '../../store/actions';
+import { RootState } from '../../store';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import { BottomTabParamList } from '../navigation/AppNavigator';
 
-const Home = (): JSX.Element => {
+interface HomeScreenProps extends BottomTabScreenProps<BottomTabParamList, 'Home'> {
+  searchResults: Prediction[];
+  setSearchResults: (results: Prediction[]) => void;
+  clearResults: () => void;
+  selectedLocation: PlaceDetails;
+  setSelectedLocation: (location: PlaceDetails) => void;
+  addSearchHistory: (place: PlaceDetails) => void;
+}
+
+const Home = ({ searchResults, setSearchResults, clearResults, selectedLocation, setSelectedLocation, addSearchHistory }: HomeScreenProps): JSX.Element => {
+
   const [searchKeyword, setSearchKeyword] = useState<string>('');
-  const [searchResults, setSearchResults] = useState<Prediction[]>([]);
-  const [selectedLocation, setSelectedLocation] = useState<PlaceDetails>();
 
   const debouncedValue = useDebounce(searchKeyword, 500);
 
@@ -23,12 +36,13 @@ const Home = (): JSX.Element => {
   };
 
   const selectLocation = async (location: Prediction) => {
-    setSearchResults([]);
+    clearResults();
     setSearchKeyword('');
 
     const details = await getLocationDetails(location.place_id);
     if (details) {
       setSelectedLocation(details);
+      addSearchHistory(details);
     }
   };
 
@@ -36,8 +50,9 @@ const Home = (): JSX.Element => {
     if (debouncedValue) {
       fetchLocations(debouncedValue);
     } else {
-      setSearchResults([]);
+      clearResults();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedValue]);
 
   return (
@@ -69,9 +84,13 @@ const Home = (): JSX.Element => {
                 keyExtractor={(_, index) => index.toString()}
               />
             </View>
-            : selectedLocation ?
+            : selectedLocation.geometry ?
             <View style={styles.mapContainer}>
-              <Map locationDetails={selectedLocation} />
+              <Map
+                locationName={selectedLocation.name}
+                locationAddress={selectedLocation.formatted_address}
+                coordinates={selectedLocation.geometry.location}
+              />
             </View>
             :
             null }
@@ -79,6 +98,18 @@ const Home = (): JSX.Element => {
       </TouchableWithoutFeedback>
     </LayoutView>
   );
+};
+
+const mapStateToProps = (state: RootState) => ({
+  searchResults: state.home.searchResults,
+  selectedLocation: state.home.selectedLocation,
+});
+
+const mapDispatchToProps = {
+  setSearchResults: updateSearchResults,
+  clearResults: clearSearchResults,
+  setSelectedLocation: updateSelectedLocation,
+  addSearchHistory: updateSearchHistory,
 };
 
 const styles = StyleSheet.create({
@@ -105,4 +136,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
