@@ -16,7 +16,7 @@ const App = (): JSX.Element => {
             style={styles.container}
             edges={{ top: 'maximum' }}
           >
-            <AppNavigator/>
+            <AppNavigator />
           </SafeAreaView>
         </SafeAreaProvider>
       </ReduxProvider>
