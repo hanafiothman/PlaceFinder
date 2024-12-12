@@ -18,8 +18,11 @@ const AppNavigator = (): JSX.Element => {
     <NavigationContainer>
       <BottomTab.Navigator
         initialRouteName={'Home'}
-        tabBar={BottomTabBar}
-        screenOptions={{ headerShown: false }}
+        // eslint-disable-next-line react/no-unstable-nested-components
+        tabBar={(props) => <BottomTabBar {...props} />}
+        screenOptions={{
+          headerShown: false,
+        }}
       >
         <BottomTab.Screen
           name={'Home'}

@@ -3,6 +3,7 @@ import MapView, { Marker } from 'react-native-maps';
 import { Location } from '../models';
 import { Alert, Linking, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Icon } from '@ant-design/react-native';
+import { useTheme } from '../theme/ThemeProvider';
 
 interface MapProps {
   locationName: string;
@@ -10,7 +11,10 @@ interface MapProps {
   coordinates: Location;
 }
 
-const Map = ({ locationName, locationAddress, coordinates }: MapProps): JSX.Element => {
+const Map: React.FC<MapProps> = ({ locationName, locationAddress, coordinates }) => {
+
+  const { theme } = useTheme();
+
   const mapRef = useRef<MapView>(null);
 
   const zoomToLocation = ({ lat, lng }: Location) => {
@@ -70,14 +74,14 @@ const Map = ({ locationName, locationAddress, coordinates }: MapProps): JSX.Elem
       <View style={styles.details}>
         <View style={styles.address}>
           <Text>{locationName}</Text>
-          <Text style={styles.addressText}>
+          <Text style={{ ...styles.addressText, color: theme.colors.gray }}>
             {locationAddress}
           </Text>
         </View>
         <TouchableOpacity
           onPress={() => getDirections(coordinates)}
         >
-          <Icon name={'environment'} color={'#FFCF00'} />
+          <Icon name={'environment'} color={theme.colors.primary} />
         </TouchableOpacity>
       </View>
     </>
@@ -99,7 +103,6 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   addressText: {
-    color: '#7D7C8E',
     marginTop: 5,
   },
 });

@@ -2,25 +2,28 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Icon } from '@ant-design/react-native';
 import { Prediction } from '../models';
+import { useTheme } from '../theme/ThemeProvider';
 
 interface LocationItemProps {
   item: Prediction,
   onPress: () => void;
 }
 
-const LocationItem = ({ item, onPress }: LocationItemProps): JSX.Element => {
+const LocationItem: React.FC<LocationItemProps> = ({ item, onPress }) => {
+
+  const { theme } = useTheme();
 
   return (
     <TouchableOpacity
       style={styles.container}
       onPress={onPress}
   >
-      <View style={styles.locationIcon}>
-        <Icon name={'environment'} color={'#FFCF00'} />
+      <View style={{ ...styles.locationIcon, backgroundColor: theme.colors.grayBackground }}>
+        <Icon name={'environment'} color={theme.colors.primary} />
       </View>
       <View style={styles.locationName}>
         <Text>{item.structured_formatting.main_text}</Text>
-        <Text style={styles.locationNameSecondary}>
+        <Text style={{ color: theme.colors.gray }}>
           {item.structured_formatting.secondary_text}
         </Text>
       </View>
@@ -35,7 +38,6 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   locationIcon: {
-    backgroundColor: '#F4F7FC',
     borderRadius: 7.5,
     alignItems: 'center',
     justifyContent: 'center',
@@ -44,9 +46,6 @@ const styles = StyleSheet.create({
   },
   locationName: {
     flex: 1,
-  },
-  locationNameSecondary: {
-    color: '#7D7C8E',
   },
 });
 

@@ -9,8 +9,10 @@ import { clearSearchHistory, placeDetailsSuccess } from '../../store/actions';
 import { Icon } from '@ant-design/react-native';
 import { RootState, useAppDispatch } from '../../store';
 import { shallowEqual, useSelector } from 'react-redux';
+import { useTheme } from '../theme/ThemeProvider';
 
-const SearchHistory = ({ navigation }: BottomTabScreenProps<BottomTabParamList, 'Search History'>): JSX.Element => {
+const SearchHistory: React.FC<BottomTabScreenProps<BottomTabParamList, 'Search History'>> = ({ navigation }) => {
+  const { theme } = useTheme();
 
   const dispatch = useAppDispatch();
 
@@ -44,7 +46,7 @@ const SearchHistory = ({ navigation }: BottomTabScreenProps<BottomTabParamList, 
           onPress={() => clearAllHistory()}
           disabled={!searchHistory.length}
         >
-          <Text style={searchHistory.length ? styles.clearLabel : styles.clearLabelDisabled}>
+          <Text style={{ color: searchHistory.length ? theme.colors.primary : theme.colors.grayInactive }}>
             Clear all
           </Text>
         </TouchableOpacity>
@@ -67,7 +69,7 @@ const SearchHistory = ({ navigation }: BottomTabScreenProps<BottomTabParamList, 
               name={'history'}
               size={'lg'}
             />
-            <Text style={styles.listEmptyText}>
+            <Text style={{ ...styles.listEmptyText, color: theme.colors.gray }}>
               Your search history is empty.
               Start searching for locations on the Home page.
             </Text>
@@ -83,12 +85,6 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     alignItems: 'flex-end',
   },
-  clearLabel: {
-    color: '#FFCF00',
-  },
-  clearLabelDisabled: {
-    color: '#E5E5E5',
-  },
   list: {
     flex: 1,
   },
@@ -97,7 +93,6 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   listEmptyText: {
-    color: '#7D7C8E',
     textAlign: 'center',
     marginTop: 10,
   },

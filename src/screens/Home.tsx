@@ -9,8 +9,11 @@ import Map from '../components/Map';
 import { shallowEqual, useSelector } from 'react-redux';
 import { clearSearchResults, placeDetailsRequest, searchLocationsRequest } from '../../store/actions';
 import { RootState, useAppDispatch } from '../../store';
+import { useTheme } from '../theme/ThemeProvider';
 
 const Home = (): JSX.Element => {
+
+  const { theme } = useTheme();
 
   const [searchKeyword, setSearchKeyword] = useState<string>('');
 
@@ -42,39 +45,39 @@ const Home = (): JSX.Element => {
         onPress={Keyboard.dismiss}
         accessible={false}
       >
-          <View style={styles.inputContainer}>
-            <Input
-              placeholder={'Search location here'}
-              value={searchKeyword}
-              onChangeText={setSearchKeyword}
-              style={styles.input}
+        <View style={styles.inputContainer}>
+          <Input
+            placeholder={'Search location here'}
+            value={searchKeyword}
+            onChangeText={setSearchKeyword}
+            style={{ ...styles.input, backgroundColor: theme.colors.grayBackground }}
+          />
+          { searchResults.length ?
+          <View style={styles.listContainer}>
+            <FlatList
+              style={styles.list}
+              horizontal={false}
+              data={searchResults}
+              showsVerticalScrollIndicator={false}
+              renderItem={({ item }) => (
+                <LocationItem
+                  item={item}
+                  onPress={() => selectLocation(item)}
+                />
+              )}
+              keyExtractor={(_, index) => index.toString()}
             />
-            { searchResults.length ?
-            <View style={styles.listContainer}>
-              <FlatList
-                style={styles.list}
-                horizontal={false}
-                data={searchResults}
-                showsVerticalScrollIndicator={false}
-                renderItem={({ item }) => (
-                  <LocationItem
-                    item={item}
-                    onPress={() => selectLocation(item)}
-                  />
-                )}
-                keyExtractor={(_, index) => index.toString()}
-              />
-            </View>
-            : selectedLocation.geometry ?
-            <View style={styles.mapContainer}>
-              <Map
-                locationName={selectedLocation.name}
-                locationAddress={selectedLocation.formatted_address}
-                coordinates={selectedLocation.geometry.location}
-              />
-            </View>
-            :
-            null }
+          </View>
+          : selectedLocation.geometry ?
+          <View style={styles.mapContainer}>
+            <Map
+              locationName={selectedLocation.name}
+              locationAddress={selectedLocation.formatted_address}
+              coordinates={selectedLocation.geometry.location}
+            />
+          </View>
+          :
+          null }
         </View>
       </TouchableWithoutFeedback>
     </LayoutView>
@@ -89,7 +92,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 2.5,
     borderRadius: 10,
-    backgroundColor: '#F4F7FC',
   },
   listContainer: {
     flexGrow: 1,

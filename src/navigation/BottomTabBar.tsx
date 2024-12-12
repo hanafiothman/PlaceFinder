@@ -2,8 +2,11 @@ import React from 'react';
 import { Icon, TabBar } from '@ant-design/react-native';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { OutlineGlyphMapType } from '@ant-design/icons-react-native';
+import { useTheme } from '../theme/ThemeProvider';
 
-const BottomTabBar = ({ state: { routes, index }, navigation }: BottomTabBarProps): JSX.Element => {
+const BottomTabBar: React.FC<BottomTabBarProps> = ({ state: { routes, index }, navigation }) => {
+
+  const { theme } = useTheme();
 
   const getIcon = (routeName: string): OutlineGlyphMapType => {
     switch(routeName) {
@@ -27,11 +30,12 @@ const BottomTabBar = ({ state: { routes, index }, navigation }: BottomTabBarProp
       navigation.navigate(routeName);
     }
   };
+
   return (
     <TabBar
-      unselectedTintColor={'#7D7C8E'}
-      tintColor={'#FFCF00'}
-      barTintColor={'#F4F7FC'}
+      unselectedTintColor={theme.colors.gray}
+      tintColor={theme.colors.primary}
+      barTintColor={theme.colors.grayBackground}
     >
       {routes.map((route, idx) => {
         const isFocused = idx === index;
