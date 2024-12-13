@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Input } from '@ant-design/react-native';
+import { Icon, Input } from '@ant-design/react-native';
 import { FlatList, Keyboard, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import LayoutView from '../layout/LayoutView';
 import useDebounce from '../hooks/useDebounce';
@@ -51,6 +51,7 @@ const Home = (): JSX.Element => {
             value={searchKeyword}
             onChangeText={setSearchKeyword}
             style={{ ...styles.input, backgroundColor: theme.colors.grayBackground }}
+            prefix={<Icon name={'search'} />}
           />
           { searchResults.length ?
           <View style={styles.listContainer}>

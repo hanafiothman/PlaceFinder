@@ -28,6 +28,20 @@ const Map: React.FC<MapProps> = ({ locationName, locationAddress, coordinates })
     }
 	};
 
+  const openInMap = ({ lat, lng }: Location, label: string) => {
+    const mapLabel = encodeURIComponent(label);
+    const url = Platform.select({
+      ios: `maps://?ll=${lat},${lng}&q=${mapLabel}`,
+      android: `geo:${lat},${lng}?q=${lat},${lng}(${mapLabel})`,
+    });
+
+    if (url) {
+      Linking.openURL(url).catch(() =>
+        Alert.alert('Error', 'Unable to open the map.')
+      );
+    }
+  };
+
   const getDirections = ({ lat, lng }: Location) => {
     const url = Platform.select({
       ios: `maps://?daddr=${lat},${lng}`,
@@ -79,9 +93,15 @@ const Map: React.FC<MapProps> = ({ locationName, locationAddress, coordinates })
           </Text>
         </View>
         <TouchableOpacity
-          onPress={() => getDirections(coordinates)}
+          onPress={() => openInMap(coordinates, locationName)}
         >
           <Icon name={'environment'} color={theme.colors.primary} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.directionButton}
+          onPress={() => getDirections(coordinates)}
+        >
+          <Icon name={'aim'} color={theme.colors.primary} />
         </TouchableOpacity>
       </View>
     </>
@@ -96,7 +116,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
   },
   address: {
     flex: 1,
@@ -104,6 +123,9 @@ const styles = StyleSheet.create({
   },
   addressText: {
     marginTop: 5,
+  },
+  directionButton: {
+    marginLeft: 5,
   },
 });
 
