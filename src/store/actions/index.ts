@@ -1,4 +1,4 @@
-import { PlaceDetails, Prediction } from '../../src/models';
+import { PlaceDetails, Prediction } from '../../models';
 import { CLEAR_SEARCH_HISTORY, UPDATE_SEARCH_HISTORY } from '../reducers/searchHistory';
 import {
   CLEAR_SEARCH_RESULTS,

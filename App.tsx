@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import AppNavigator from './src/navigation/AppNavigator';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { Provider as ReduxProvider } from 'react-redux';
-import store from './store';
+import store from './src/store';
 import ThemeProvider from './src/theme/ThemeProvider';
 
 const App = (): JSX.Element => {

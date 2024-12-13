@@ -1,5 +1,5 @@
 import { Reducer } from 'redux';
-import { PlaceDetails } from '../../src/models';
+import { PlaceDetails } from '../../models';
 import { RootActions } from '../actions';
 
 export const UPDATE_SEARCH_HISTORY = 'UPDATE_SEARCH_HISTORY';

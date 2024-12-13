@@ -1,5 +1,5 @@
 import { Reducer } from 'redux';
-import { PlaceDetails, Prediction } from '../../src/models';
+import { PlaceDetails, Prediction } from '../../models';
 import { RootActions } from '../actions';
 
 export const SEARCH_LOCATIONS_REQUEST = 'SEARCH_LOCATIONS_REQUEST';

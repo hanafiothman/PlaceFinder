@@ -5,9 +5,9 @@ import LayoutView from '../layout/LayoutView';
 import HistoryItem from '../components/HistoryItem';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { BottomTabParamList } from '../navigation/AppNavigator';
-import { clearSearchHistory, placeDetailsSuccess } from '../../store/actions';
+import { clearSearchHistory, placeDetailsSuccess } from '../store/actions';
 import { Icon } from '@ant-design/react-native';
-import { RootState, useAppDispatch } from '../../store';
+import { RootState, useAppDispatch } from '../store';
 import { shallowEqual, useSelector } from 'react-redux';
 import { useTheme } from '../theme/ThemeProvider';
 

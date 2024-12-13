@@ -3,7 +3,7 @@ import { map, mergeMap, catchError, concatMap } from 'rxjs/operators';
 import { PLACE_DETAILS_REQUEST, SEARCH_LOCATIONS_REQUEST } from '../reducers/home';
 import { placeDetailsFailure, placeDetailsSuccess, RootActions, searchLocationsFailure, searchLocationsSuccess, updateSearchHistory } from '../actions';
 import { ajax } from 'rxjs/ajax';
-import { PlaceDetailsApiResponse, SearchResultsApiResponse } from '../../src/models';
+import { PlaceDetailsApiResponse, SearchResultsApiResponse } from '../../models';
 import Config from 'react-native-config';
 import { Observable, of } from 'rxjs';
 

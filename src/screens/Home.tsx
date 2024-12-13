@@ -7,8 +7,8 @@ import { Prediction } from '../models';
 import LocationItem from '../components/LocationItem';
 import Map from '../components/Map';
 import { shallowEqual, useSelector } from 'react-redux';
-import { clearSearchResults, placeDetailsRequest, searchLocationsRequest } from '../../store/actions';
-import { RootState, useAppDispatch } from '../../store';
+import { clearSearchResults, placeDetailsRequest, searchLocationsRequest } from '../store/actions';
+import { RootState, useAppDispatch } from '../store';
 import { useTheme } from '../theme/ThemeProvider';
 
 const Home = (): JSX.Element => {
